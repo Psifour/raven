@@ -384,6 +384,7 @@ public class PrivateKeySweepDialog extends Dialog<Transaction> {
         ECKey pubKey = ECKey.fromPublicOnly(privKey);
 
         Transaction noFeeTransaction = new Transaction();
+        txOutputs.sort(Comparator.comparing(TransactionOutput::getValue));
         long total = 0;
         for(TransactionOutput txOutput : txOutputs) {
             scriptType.addSpendingInput(noFeeTransaction, txOutput, pubKey, TransactionSignature.dummy(scriptType == P2TR ? TransactionSignature.Type.SCHNORR : TransactionSignature.Type.ECDSA));
